@@ -1,0 +1,331 @@
+/* ─── DC Form Styles (ported from dubai-trade-ui/preview) ──────────────────── */
+
+/* ─── Buttons ─────────────────────────────────────────────────────────────────── */
+.dc-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  font-family: inherit; font-size: 16px; font-weight: 600; border-radius: 6px;
+  border: 1.5px solid transparent; cursor: pointer; transition: all 120ms;
+  white-space: nowrap; min-height: 48px; padding: 10px 24px;
+}
+.dc-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.dc-btn--md { font-size: 16px; padding: 10px 20px; min-height: 48px; }
+.dc-btn--lg { font-size: 16px; padding: 13px 28px; min-height: 48px; }
+.dc-btn--blue { background: #1360D2; color: #fff; border-color: #1360D2; }
+.dc-btn--blue:hover:not(:disabled) { background: #0E4FB0; border-color: #0E4FB0; }
+.dc-btn--outline { background: #fff; color: #1360D2; border-color: #1360D2; }
+.dc-btn--outline:hover:not(:disabled) { background: #EDF2FD; border-color: #1360D2; }
+
+/* ─── Back Button ──────────────────────────────────────────────────────────────── */
+.dc-back-btn {
+  width: 48px; height: 48px; border-radius: 50%; border: none;
+  display: flex; align-items: center; justify-content: center; color: #0E1B3D;
+  background: #E7F2FE; flex-shrink: 0; cursor: pointer;
+}
+.dc-back-btn:hover { background: #d4e8fd; }
+
+/* ─── Breadcrumb ──────────────────────────────────────────────────────────────── */
+.dc-breadcrumb { display: flex; align-items: center; gap: 4px; padding: 16px 0 0; flex-wrap: wrap; }
+.dc-breadcrumb__item { display: flex; align-items: center; gap: 4px; }
+.dc-breadcrumb__link { background: none; border: none; color: #3D4E63; font-size: 16px; cursor: pointer; padding: 0; }
+.dc-breadcrumb__link:hover { color: #1360D2; text-decoration: underline; }
+.dc-breadcrumb__current { font-size: 16px; color: #888; }
+.dc-breadcrumb svg { color: #888; flex-shrink: 0; }
+
+/* ─── Info header (title + back btn row) ──────────────────────────────────────── */
+.dc-info-header { display: flex; align-items: center; gap: 12px; padding: 20px 0 16px; }
+.dc-info-header__title { font-size: 28px; font-weight: 400; color: #000; margin: 0; letter-spacing: -0.14px; }
+
+/* ─── Form Card ──────────────────────────────────────────────────────────────── */
+.dc-form-card {
+  border-radius: 16px; overflow: visible;
+  display: flex; flex-direction: column; gap: 12px;
+  padding: 12px;
+}
+.dc-form-section {
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px 28px;
+  box-shadow: #00000014 0 4px 16px;
+}
+.dc-form-section:last-child { border-bottom: none; }
+.dc-form-section__heading {
+  font-size: 20px; font-weight: 700; color: #0E1B3D;
+  margin: 0 0 20px;
+}
+
+/* ─── Basic Information Section ─────────────────────────────────────────────── */
+.dc-basic-info-section { background: #fff; border-radius: 12px; margin: 0; }
+.dc-basic-info-header { display: flex; align-items: center; gap: 8px; color: #0E1B3D; margin-bottom: 20px; }
+.dc-basic-info-header .dc-form-section__heading { font-size: 20px; color: #0E1B3D; }
+.dc-basic-info-cards { display: flex; flex-wrap: wrap; gap: 12px; align-items: stretch; }
+.dc-basic-info-card {
+  display: flex; gap: 14px; align-items: flex-start;
+  background: #f5f9ff; border-radius: 12px; padding: 16px 20px;
+  box-shadow: 0 1px 3px rgba(16,24,40,0.06);
+  min-width: 200px;
+}
+.dc-basic-info-card__icon {
+  width: 40px; height: 40px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.dc-basic-info-card__icon--blue,
+.dc-basic-info-card__icon--indigo,
+.dc-basic-info-card__icon--teal,
+.dc-basic-info-card__icon--green { background: #d7e8ff; color: #1360D2; }
+.dc-basic-info-card__body { display: flex; flex-direction: column; gap: 4px; flex: 1; }
+.dc-basic-info-card__label { font-size: 16px; font-weight: 600; color: #5e6b7a; text-transform: capitalize; letter-spacing: 0; line-height: 20px; }
+.dc-basic-info-card__value { font-size: 16px; color: #0E1B3D; line-height: 1.55; }
+.dc-basic-info-card__value--charge { font-size: 20px; font-weight: 700; color: #1360D2; line-height: 1.2; }
+
+/* ─── Form Layout ────────────────────────────────────────────────────────────── */
+.dc-form-row { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 20px; }
+
+/* ─── Fields ─────────────────────────────────────────────────────────────────── */
+.dc-field--half { flex: 1; min-width: 200px; }
+
+/* ─── Floating Label Fields ───────────────────────────────────────────────────── */
+.dc-float-wrapper { display: flex; flex-direction: column; flex: 1; min-width: 200px; }
+.dc-float-wrapper.dc-field--half { flex: 1; min-width: 200px; }
+.dc-float-field {
+  position: relative; display: flex; align-items: center;
+  width: 100%;
+}
+.dc-float-input {
+  width: 100%; height: 56px; padding: 0 16px;
+  border: 1px solid #D5DDFB; border-radius: 6px;
+  background: #fff; font-size: 16px; color: #0E1B3D;
+  outline: none; transition: border-color 150ms;
+  font-family: inherit;
+}
+.dc-float-input:focus { border-color: #1360D2; }
+.dc-float-label {
+  position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+  font-size: 16px; color: #000; pointer-events: none;
+  transition: all 150ms ease; background: transparent; padding: 0 4px;
+}
+.dc-float-input:focus ~ .dc-float-label,
+.dc-float-input:not(:placeholder-shown) ~ .dc-float-label {
+  top: 0; transform: translateY(-50%); font-size: 12px; color: #1360D2; font-weight: 500; background: #fff;
+}
+.dc-req { color: #EF4444; }
+
+/* Field hint (below input) */
+.dc-field-hint {
+  display: flex; align-items: center; gap: 5px;
+  margin-top: 5px; font-size: 16px; color: #5E6B7A; line-height: 20px;
+}
+.dc-field-hint svg { flex-shrink: 0; }
+
+/* Verify button inside float field */
+.dc-float-trail-btn {
+  position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+  padding: 6px 14px; font-size: 16px; font-weight: 600; color: #1360D2;
+  background: #EDF2FD; border: none; border-radius: 6px; cursor: pointer;
+}
+.dc-float-trail-btn:hover { background: #dce8fc; }
+
+/* Email verified badge */
+.dc-verified-badge {
+  position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+  display: flex; align-items: center; gap: 4px;
+  font-size: 16px; font-weight: 600; color: #16A34A;
+}
+
+/* ─── Float Dropdown (custom) ────────────────────────────────────────────────── */
+.dc-float-dropdown { position: relative; width: 100%; }
+.dc-float-dropdown__trigger {
+  width: 100%; height: 56px; padding: 0 40px 0 16px;
+  border: 1px solid #D5DDFB; border-radius: 6px;
+  background: #fff; font-size: 16px; color: #0E1B3D;
+  cursor: pointer; outline: none; text-align: left;
+  display: flex; align-items: center;
+  transition: border-color 150ms; position: relative;
+}
+.dc-float-dropdown__trigger:focus,
+.dc-float-dropdown--open .dc-float-dropdown__trigger { border-color: #1360D2; }
+.dc-float-dropdown__label {
+  position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+  font-size: 16px; color: #000; background: transparent;
+  padding: 0 4px; pointer-events: none;
+  transition: top 150ms ease, transform 150ms ease, font-size 150ms ease, color 150ms ease, background 150ms ease;
+}
+.dc-float-dropdown--open .dc-float-dropdown__label,
+.dc-float-dropdown--has-value .dc-float-dropdown__label {
+  top: 0; transform: translateY(-50%); font-size: 12px;
+  color: #1360D2; background: #fff; font-weight: 500;
+}
+.dc-float-dropdown__placeholder { color: #9CA3AF; }
+.dc-float-dropdown__chevron {
+  position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+  pointer-events: none; color: #6B7A8D; transition: transform 150ms;
+}
+.dc-float-dropdown--open .dc-float-dropdown__chevron { transform: translateY(-50%) rotate(180deg); }
+.dc-float-dropdown__menu {
+  position: absolute; top: calc(100% + 4px); left: 0; right: 0;
+  background: #fff; border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(14,27,61,0.14);
+  z-index: 200; overflow: hidden;
+  animation: dcDropdownFadeIn 120ms ease;
+}
+@keyframes dcDropdownFadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+.dc-float-dropdown__trigger--search { cursor: text; }
+.dc-float-dropdown__inline-search {
+  flex: 1; border: none; outline: none; background: transparent;
+  font-size: 16px; color: #0E1B3D; padding: 0; width: 100%;
+  min-width: 0;
+}
+.dc-float-dropdown__inline-search::placeholder { color: #9CA3AF; }
+.dc-float-dropdown__options {
+  max-height: 240px; overflow-y: auto;
+}
+.dc-float-dropdown__options::-webkit-scrollbar { width: 6px; }
+.dc-float-dropdown__options::-webkit-scrollbar-track { background: transparent; }
+.dc-float-dropdown__options::-webkit-scrollbar-thumb { background: #D5DDFB; border-radius: 3px; }
+.dc-float-dropdown__option {
+  padding: 13px 20px; font-size: 16px; color: #0E1B3D;
+  cursor: pointer; transition: background 100ms;
+  border-bottom: 1px solid #F3F4F8;
+}
+.dc-float-dropdown__option:last-child { border-bottom: none; }
+.dc-float-dropdown__option:hover { background: #1360D2; color: #fff; }
+.dc-float-dropdown__option--selected { color: #1360D2; background: #EEF4FF; font-weight: 500; }
+.dc-float-dropdown__no-results { padding: 16px 20px; font-size: 16px; color: #9CA3AF; text-align: center; }
+
+/* ─── File Upload ─────────────────────────────────────────────────────────────── */
+.dc-dropzone {
+  display: flex; align-items: center; gap: 12px;
+  justify-content: center; overflow: hidden;
+  background: #f8fafd; border: 1px dashed #8f94ae; border-radius: 4px;
+  padding: 15px 12px;
+  width: 50%;
+}
+.dc-dropzone--active { border-color: #1360D2; background: #EBF2FF; }
+.dc-dropzone__icon {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: #E2E5F0; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.dc-dropzone__text { font-size: 16px; color: #6B7280; white-space: nowrap; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.dc-dropzone__or { font-size: 16px; color: #9CA3AF; flex-shrink: 0; }
+.dc-dropzone__browse {
+  padding: 8px 16px; border: 1px solid #1360D2; border-radius: 4px;
+  background: #fff; color: #1360D2; font-size: 16px; font-weight: 600;
+  cursor: pointer; white-space: nowrap; flex-shrink: 0;
+}
+.dc-dropzone__browse:hover { background: #EBF2FF; }
+
+/* File grid (4 per row) */
+.dc-file-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.dc-file-input-wrap {
+  display: flex; align-items: center;
+  background: #fff; border: 1px solid #E4E2E6; border-radius: 8px;
+  height: 56px; width: 100%; overflow: hidden;
+}
+.dc-file-type-icon { margin-left: 12px; flex-shrink: 0; }
+.dc-file-input-text {
+  flex: 1; padding: 8px 12px;
+  font-size: 16px; color: #40484F;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.dc-file-input-trail {
+  display: flex; align-items: center; justify-content: flex-end;
+  padding: 0 12px 0 8px; height: 100%; flex-shrink: 0;
+}
+.dc-file-tag__remove {
+  height: 32px; width: 32px; font-size: 18px; color: #888;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 6px; cursor: pointer; background: none; border: none;
+}
+.dc-file-tag__remove:hover { background: #FEE2E2; color: #DC2626; }
+
+/* ─── Bill Info grid label/value ──────────────────────────────────────────────── */
+.dc-bill-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px 32px;
+}
+.dc-bill-field__label {
+  font-size: 14px; color: #697498; margin: 0 0 5px; letter-spacing: 0.2px;
+}
+.dc-bill-field__value {
+  font-size: 16px; font-weight: 600; color: #0E1B3D;
+}
+.dc-bill-badge--pending {
+  display: inline-block; padding: 3px 10px; border-radius: 4px;
+  font-size: 13px; font-weight: 600;
+  background: rgba(255,169,26,0.16); color: #b45309;
+}
+
+/* ─── Form Actions ────────────────────────────────────────────────────────────── */
+.dc-form-actions { display: flex; justify-content: center; gap: 12px; padding: 20px 24px; flex-wrap: wrap; }
+.dc-form-actions .dc-btn { min-width: 100px; }
+.dc-form-actions .dc-btn--blue { padding: 10px 32px; font-size: 16px; }
+.dc-form-actions .dc-btn--outline { padding: 10px 24px; font-size: 16px; }
+
+/* ─── Success Alert Banner ────────────────────────────────────────────────── */
+.dc-success-alert {
+  display: flex; align-items: center; justify-content: space-between;
+  background: #F0FFF4; border: 1px solid #9AE6B4; border-radius: 10px;
+  padding: 16px 20px; margin-bottom: 24px; gap: 14px;
+}
+.dc-success-alert__left { display: flex; align-items: center; gap: 14px; }
+.dc-success-alert__title { font-size: 16px; font-weight: 700; color: #276749; margin-bottom: 4px; }
+.dc-success-alert__msg { font-size: 16px; color: #38A169; line-height: 1.5; }
+.dc-success-alert__close {
+  font-size: 20px; color: #888; line-height: 1; flex-shrink: 0;
+  background: none; border: none; cursor: pointer; padding: 0;
+}
+
+/* ─── Success / Enquiry Result Grid ──────────────────────────────────────── */
+.dc-success-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 20px 32px; margin-bottom: 24px;
+}
+.dc-success-grid--5 { grid-template-columns: repeat(5, 1fr); }
+.dc-success-field { display: flex; flex-direction: column; gap: 6px; }
+.dc-success-field__label { font-size: 16px; color: #696f83; letter-spacing: 0.3px; }
+.dc-success-field__value { font-size: 16px; color: #0E1B3D; font-weight: 600; }
+.dc-success-divider { border: none; border-top: 1px solid #E8EDF2; margin: 0 0 24px; }
+
+/* ─── Badge ───────────────────────────────────────────────────────────────── */
+.dc-badge {
+  display: inline-block; padding: 3px 10px; border-radius: 12px;
+  font-size: 12px; font-weight: 600; width: fit-content;
+}
+.dc-badge--draft { background: #EDF2FD; color: #1360D2; }
+.dc-badge--success { background: #F0FFF4; color: #276749; }
+.dc-badge--pending { background: rgba(255,169,26,0.16); color: #b45309; }
+
+/* ─── Charges Table ───────────────────────────────────────────────────────── */
+.dc-charges__table {
+  width: 100%; border-collapse: collapse; font-size: 16px;
+  border: 1px solid #E8EDF2; border-radius: 8px; overflow: hidden;
+}
+.dc-charges__table th {
+  padding: 12px 16px; background: #a7c2e8; border-bottom: 1px solid #E8EDF2;
+  text-align: left; font-weight: 600; color: #000; font-size: 16px;
+}
+.dc-charges__table th:last-child { text-align: right; }
+.dc-charges__table td {
+  padding: 12px 16px; border-bottom: 1px solid #F0F4FA; color: #000; font-size: 16px;
+}
+.dc-charges__table td:last-child { text-align: right; white-space: nowrap; }
+.dc-charges__table tbody tr:last-child td { border-bottom: none; }
+.dc-charges__table tfoot td {
+  padding: 13px 16px; border-top: 1px solid #E8EDF2;
+  background: #FAFBFD; font-size: 16px;
+}
+
+/* ─── Transaction History Card ───────────────────────────────────────────── */
+.dc-result-txn-card { border-radius: 12px; overflow: hidden; }
+.dc-result-txn-card__header {
+  background: #A7C2E9; color: #0E1B3D;
+  font-size: 20px; font-weight: 700; padding: 14px 24px;
+}
+.dc-result-txn-card__body { background: #fff; padding: 24px; }
+.dc-result-txn-card__body .dc-success-field__label { color: #696f83; }

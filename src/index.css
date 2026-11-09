@@ -1,0 +1,121 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  font-size: 16px;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: 'Dubai', 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 16px;
+  background: #f8fafd;
+  color: #0e1b3d;
+}
+
+label {
+  color: #000;
+}
+
+/* Thin scrollbar for service columns */
+.scrollbar-thin::-webkit-scrollbar { width: 4px; }
+.scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
+.scrollbar-thin::-webkit-scrollbar-thumb { background: #d0d5e8; border-radius: 4px; }
+.scrollbar-thin::-webkit-scrollbar-thumb:hover { background: #aab0c8; }
+
+/* Hidden scrollbar (still scrollable) — used by the responsive journey stepper */
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* Dubai Trade-style input/dropdown containers — white background with a subtle
+   elevation shadow. Targets the canonical DT control pattern: a 44/48/56px-tall
+   box with the standard #d5ddfb border (declared either via Tailwind class or
+   inline style). */
+[class*="border-[#d5ddfb]"][class*="h-[56px]"],
+[class*="border-[#d5ddfb]"][class*="h-[48px]"],
+[class*="border-[#d5ddfb]"][class*="h-[44px]"],
+[style*="border: 1px solid #d5ddfb"],
+[style*="border:1px solid #d5ddfb"],
+[style*="border: 1px solid rgb(213, 221, 251)"],
+[style*="border:1px solid rgb(213, 221, 251)"] {
+  box-shadow: 0px 2px 6px rgba(11, 21, 52, 0.06);
+  background: #ffffff;
+}
+
+[class*="border-[#d5ddfb]"][class*="h-[56px]"]:focus-within,
+[class*="border-[#d5ddfb]"][class*="h-[48px]"]:focus-within,
+[class*="border-[#d5ddfb]"][class*="h-[44px]"]:focus-within,
+[style*="border: 1px solid #d5ddfb"]:focus-within,
+[style*="border:1px solid #d5ddfb"]:focus-within {
+  box-shadow: 0px 4px 10px rgba(19, 96, 210, 0.10);
+}
+
+/* Dubai Trade-style data table — light-blue header, separated rows on the page
+   background, blue hover and a stronger blue selected state. */
+.dt-table {
+  border-collapse: separate;
+  border-spacing: 0 8px;
+  width: 100%;
+}
+.dt-table thead th {
+  background: #a7c2e9;
+  color: #000;
+  font-weight: 500;
+  text-align: left;
+  padding: 10px 12px;
+  letter-spacing: 0.07px;
+  white-space: nowrap;
+}
+.dt-table thead tr th:first-child { border-top-left-radius: 8px; border-bottom-left-radius: 8px; }
+.dt-table thead tr th:last-child  { border-top-right-radius: 8px; border-bottom-right-radius: 8px; }
+.dt-table tbody td {
+  background: #ffffff;
+  padding: 14px 12px;
+  border-top: 1px solid transparent;
+  border-bottom: 1px solid transparent;
+  transition: background-color 120ms ease;
+}
+.dt-table tbody tr:hover td {
+  background: #f4f7fc;
+}
+.dt-table tbody tr.is-selected td {
+  background: #e2ebf9;
+}
+
+/* Lined variant — rows sit flush with a grey separator line between them,
+   for tables rendered inside a white card where the 8px gap is invisible. */
+.dt-table--lined {
+  border-spacing: 0;
+}
+.dt-table--lined tbody td {
+  border-bottom: 1px solid #e5e9f2;
+}
+
+/* Eligible declarations table — same row hover / selection treatment.
+   Uses !important to override the per-cell inline `background: #fff` styles. */
+.eligible-table tbody tr:not(.is-disabled):hover td {
+  background: #f4f7fc !important;
+}
+.eligible-table tbody tr.is-selected td {
+  background: #e2ebf9 !important;
+}
+
+/* ── Secondary buttons ───────────────────────────────────────────────────────
+   Outlined at rest; on hover they fill with a light blue tint and keep their own
+   border and text colour — one definition for the whole app.
+
+   Marked with a `data-secondary-btn` attribute rather than a utility class, and
+   `!important` is required: many call sites set their resting colours through
+   inline `style`, which would otherwise win over the hover state. Only the
+   background is set, so each button keeps whichever blue it already uses. */
+[data-secondary-btn] {
+  transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease;
+}
+[data-secondary-btn]:hover:not(:disabled) {
+  background-color: #e2ebf9 !important;
+}
