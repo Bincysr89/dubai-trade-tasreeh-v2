@@ -10,6 +10,33 @@ import TasreehPaymentsFlow from './tasreeh/TasreehPayments';
 import ServiceFlow from './tasreeh/ServiceFlow';
 import { SERVICE_REGISTRY } from './tasreeh/serviceConfigs';
 import { TASREEH_SERVICES } from './gatepass/gatePassData';
+import PassMgmtFlow, { type PassMgmtEntry } from './passmgmt/PassMgmtFlow';
+import SecurityFlow, { type SecurityEntry } from './passmgmt/SecurityPages';
+
+/* Figma "Tasreeh-Dev" Pass Management services (Visitor) and the entry page each one opens */
+export const PASS_MGMT_SERVICES: Record<string, PassMgmtEntry> = {
+  'Tasreeh - Apply Gate Pass': 'apply',
+  'Tasreeh - View All Passes': 'listing',
+  'Tasreeh - Report Lost Pass': 'lost',
+  'Tasreeh - Return Pass for Amendment': 'amend',
+  'Tasreeh - Drafts': 'drafts',
+  'Tasreeh - My Gate Passes': 'approved',
+  'Tasreeh - My Request': 'requests',
+  'Tasreeh - My Payment Receipts': 'receipts',
+  'Tasreeh - Pass Approvals': 'approvals',
+};
+/* Services that ask Visitor or Company first */
+const CHOOSER_SERVICES = ['Tasreeh - View All Passes', 'Tasreeh - Apply Gate Pass'];
+/* Figma "Tasreeh New Services" screens */
+const SECURITY_SERVICES: Record<string, SecurityEntry> = {
+  "Tasreeh - My NOC's": 'nocs',
+  'Tasreeh - Registration of Security Company': 'company',
+  'Tasreeh - Registration of Security Personnel': 'personnel',
+  'Tasreeh - Request Security Services': 'services',
+};
+/* Only the Figma Tasreeh list is shown — the older Tasreeh services (Gate Passes, Delegation Visits,
+   Vessel, Media, Payments) are no longer in the catalogue */
+const FIGMA_SECURITY_SERVICES = [...Object.keys(SECURITY_SERVICES), 'Tasreeh - ISPS Services'];
 
 type Props = { onClose: () => void; /** Open straight on a service (header search). */ initialItem?: string };
 
@@ -54,7 +81,7 @@ export const SUPPLIER_COLUMNS: { title: string; items: string[] }[] = [
   },
   {
     title: 'Gate Management',
-    items: [...TASREEH_SERVICES, 'VGM Certificate', 'Visitor Gate Pass - PCFC'],
+    items: [...Object.keys(PASS_MGMT_SERVICES), ...FIGMA_SECURITY_SERVICES, 'VGM Certificate', 'Visitor Gate Pass - PCFC'],
   },
   {
     title: 'Payments',
@@ -76,15 +103,15 @@ export const SUPPLIER_COLUMNS: { title: string; items: string[] }[] = [
 /* Services that open a working flow */
 /* ISPS and Vessel Services are listed but not highlighted / not live */
 const NOT_LIVE = ['Tasreeh - ISPS Services', 'Tasreeh - Vessel Services'];
-const ALL_LIVE = ['Tasreeh - Gate Passes', 'Tasreeh - Delegation Visits', 'Tasreeh - Payments', ...Object.keys(SERVICE_REGISTRY)]
+const ALL_LIVE = [...Object.keys(PASS_MGMT_SERVICES), ...Object.keys(SECURITY_SERVICES), 'Tasreeh - Gate Passes', 'Tasreeh - Delegation Visits', 'Tasreeh - Payments', ...Object.keys(SERVICE_REGISTRY)]
   .filter(s => !NOT_LIVE.includes(s));
 /* Individual (UAE PASS basic account) only gets the free Gate Pass service */
 /* Individual (UAE PASS basic account) doesn't see the other Tasreeh services at all */
 export const hiddenForPersona = (item: string) =>
-  getPersona() === 'individual' && TASREEH_SERVICES.includes(item) && item !== 'Tasreeh - Gate Passes';
+  getPersona() === 'individual' && TASREEH.has(item) && item !== 'Tasreeh - Gate Passes' && !(item in PASS_MGMT_SERVICES);
 
-export const liveServices = () => new Set(getPersona() === 'individual' ? ['Tasreeh - Gate Passes'] : ALL_LIVE);
-const TASREEH = new Set(TASREEH_SERVICES);
+export const liveServices = () => new Set(getPersona() === 'individual' ? ['Tasreeh - Gate Passes', ...Object.keys(PASS_MGMT_SERVICES)] : ALL_LIVE);
+const TASREEH = new Set([...Object.keys(PASS_MGMT_SERVICES), ...Object.keys(SECURITY_SERVICES), ...TASREEH_SERVICES]);
 
 export default function SupplierDetailModal({ onClose, initialItem }: Props) {
   const [LIVE] = useState(liveServices);
@@ -92,11 +119,15 @@ export default function SupplierDetailModal({ onClose, initialItem }: Props) {
   /* Company users (Visitor / Host Company) choose Individual or Company before Gate Passes */
   const [persona] = useState<Persona>(getPersona);
   const isCompany = persona === 'visitor-company' || persona === 'host-company';
-  const opensChooser = (item?: string) => item === 'Tasreeh - Gate Passes' && isCompany;
+  const opensChooser = (item?: string) => (item === 'Tasreeh - Gate Passes' && isCompany) || CHOOSER_SERVICES.includes(item ?? '');
+  /* Company picked on Apply Gate Pass → the company Apply New Pass form */
+  const [pmEntry, setPmEntry] = useState<PassMgmtEntry | null>(null);
   const [chooseProfile, setChooseProfile] = useState(() => opensChooser(initialItem));
   const [gpProfile, setGpProfile] = useState<Persona | null>(null);
+  /* Which service raised the Visitor / Company popup — View All Passes sends Visitor to Pass Management */
+  const [chooserFor, setChooserFor] = useState(() => (opensChooser(initialItem) ? initialItem! : 'Tasreeh - Gate Passes'));
   const openService = (item: string) => {
-    if (item === 'Tasreeh - Gate Passes' && isCompany) setChooseProfile(true);
+    if (opensChooser(item)) { setChooserFor(item); setChooseProfile(true); }
     else setService(item);
   };
   const [search, setSearch] = useState('');
@@ -110,6 +141,12 @@ export default function SupplierDetailModal({ onClose, initialItem }: Props) {
         onClose={() => { setService(null); setGpProfile(null); }}
       />
     );
+  }
+  if (service && SECURITY_SERVICES[service]) {
+    return <SecurityFlow key={service} entry={SECURITY_SERVICES[service]} onClose={() => setService(null)} />;
+  }
+  if (service && PASS_MGMT_SERVICES[service]) {
+    return <PassMgmtFlow key={service + (pmEntry ?? '')} entry={pmEntry ?? PASS_MGMT_SERVICES[service]} onClose={() => { setService(null); setPmEntry(null); }} />;
   }
   if (service === 'Tasreeh - Payments') {
     return <TasreehPaymentsFlow onClose={() => setService(null)} />;
@@ -241,9 +278,17 @@ export default function SupplierDetailModal({ onClose, initialItem }: Props) {
 
       {chooseProfile && (
         <GatePassProfileModal
+          service={chooserFor}
+          directCompany={CHOOSER_SERVICES.includes(chooserFor)}
           onClose={() => setChooseProfile(false)}
           onHome={onClose}
-          onPick={p => { setChooseProfile(false); setGpProfile(p); setService('Tasreeh - Gate Passes'); }}
+          onPick={p => {
+            setChooseProfile(false);
+            /* Visitor on View All Passes → Figma Pass Management; Company keeps the existing company flows */
+            if (chooserFor === 'Tasreeh - View All Passes') { setPmEntry(p === 'individual' ? 'listing' : 'company'); setService(chooserFor); return; }
+            if (chooserFor === 'Tasreeh - Apply Gate Pass') { setPmEntry(p === 'individual' ? 'apply' : 'companyApply'); setService(chooserFor); return; }
+            setGpProfile(p); setService('Tasreeh - Gate Passes');
+          }}
         />
       )}
     </div>

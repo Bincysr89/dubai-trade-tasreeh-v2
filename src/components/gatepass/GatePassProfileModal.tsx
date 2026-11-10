@@ -31,7 +31,11 @@ const OPTIONS: { id: GatePassProfile; label: string; sub: string; icon: JSX.Elem
 ];
 
 /* Shown on its own page: website header over a plain white background, the popup centred on it */
-export default function GatePassProfileModal({ onClose, onHome, onPick }: {
+export default function GatePassProfileModal({ onClose, onHome, onPick, service = 'Tasreeh - Gate Passes', directCompany }: {
+  /** Company goes straight on (no Visitor Company / Host Company simulate step) */
+  directCompany?: boolean;
+  /** Catalogue service that raised the popup (shown as the subtitle) */
+  service?: string;
   onClose: () => void; onHome: () => void;
   /** individual, or the company flow chosen in the simulate popup */
   onPick: (p: Extract<Persona, 'individual' | 'visitor-company' | 'host-company'>) => void;
@@ -41,7 +45,7 @@ export default function GatePassProfileModal({ onClose, onHome, onPick }: {
   const [simulate, setSimulate] = useState(false);
   const choose = (p: GatePassProfile) => {
     setPicked(p);
-    setTimeout(() => (p === 'company' ? setSimulate(true) : onPick('individual')), 150);
+    setTimeout(() => (p === 'company' ? (directCompany ? onPick('visitor-company') : setSimulate(true)) : onPick('individual')), 150);
   };
 
   useEffect(() => {
@@ -69,7 +73,7 @@ export default function GatePassProfileModal({ onClose, onHome, onPick }: {
       </div>
       <div className="px-[24px] sm:px-[36px] pt-[28px] pb-[36px]" style={{ fontFamily: font }}>
         <p className="text-[20px] font-bold text-[#0e1b3d] text-center">Choose the profile type for Gate Pass services</p>
-        <p className="text-[15px] text-[#5a6478] text-center mt-[6px] mb-[28px]">Tasreeh - Gate Passes</p>
+        <p className="text-[15px] text-[#5a6478] text-center mt-[6px] mb-[28px]">{service}</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-[20px]" role="radiogroup" aria-label="Gate pass profile type">
           {OPTIONS.map(o => {
             const on = picked === o.id;

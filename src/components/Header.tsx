@@ -150,12 +150,13 @@ export default function Header({ onServiceCatalogue, onHome, catalogueClosesOnCl
 
       {/* Service Catalogue overlay — opened from any page's header. Portaled to
           <body> so it escapes the header's z-40 sticky stacking context. */}
+      {/* z-[70] wrapper keeps them above full-page service flows (z-[60]) they're opened from */}
       {searchOpen && createPortal(
-        <ServiceSearchPage onClose={() => setSearchOpen(false)} />,
+        <div className="relative z-[70]"><ServiceSearchPage onClose={() => setSearchOpen(false)} /></div>,
         document.body,
       )}
       {catalogueOpen && createPortal(
-        <ServiceCatalogueModal onClose={() => setCatalogueOpen(false)} />,
+        <div className="relative z-[70]"><ServiceCatalogueModal onClose={() => setCatalogueOpen(false)} /></div>,
         document.body,
       )}
     </header>
